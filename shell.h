@@ -6,4 +6,9 @@
 #include <errno.h>
 #include <sys/wait.h>
 #include <string.h>
+#include <sys/types.h>
+extern char **environ;
+void display_prompt(void);
+char *read_input(void);
+void execute_command(char *line);
 #endif
