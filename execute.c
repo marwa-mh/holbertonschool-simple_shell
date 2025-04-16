@@ -15,9 +15,11 @@ void execute_command(char *line)
 	{
 		argv[0] = line;
 		argv[1] = NULL;
-		execve(line, argv, environ);
-		perror("./shell"); /* execve failed */
-		exit(EXIT_FAILURE);
+		if (execve(line, argv, environ) == -1)
+		{
+			perror("./shell"); /* execve failed */
+			exit(EXIT_FAILURE);
+		}
 	}
 	else
 	{
