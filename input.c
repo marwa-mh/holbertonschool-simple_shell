@@ -4,7 +4,7 @@ char *read_input(void)
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t nread;
-	char *start, *end;
+	char *start, *end, *cleaned;
 
 	nread = getline(&line, &len, stdin);
 	if (nread == -1)
@@ -22,7 +22,7 @@ char *read_input(void)
 	end = start + strlen(start) -1;
 	while (end > start && isspace(*end))
 		*end-- = '\0';
-	char *cleaned = strdup(start);
+	*cleaned = strdup(start);
 	free(line);
 
 	return (cleaned);
