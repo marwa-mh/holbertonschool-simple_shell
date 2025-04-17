@@ -8,7 +8,7 @@ void execute_command(char *line)
 	pid_t pid;
 	int status;
 	char *argv[64];
-	char *token, *path, *full_path;
+	char *token, *full_path;
 	int i = 0;
 
 	token = strtok(line, " \t\n");
