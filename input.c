@@ -1,4 +1,8 @@
 #include "shell.h"
+int is_whitespace(char ch)
+{
+	return (ch == ' ' || ch == '\t' || ch == '\n');
+}
 char *read_input(void)
 {
 	char *line = NULL;
@@ -17,10 +21,10 @@ char *read_input(void)
 	if (line[nread - 1] == '\n')
 		line[nread - 1] = '\0';
 	start = line;
-	while (*start && isspace(*start))
+	while (*start && is_whitespace(*start))
 		start++;
 	end = start + strlen(start) -1;
-	while (end > start && isspace(*end))
+	while (end > start && is_whitespace(*end))
 		*end-- = '\0';
 	cleaned = strdup(start);
 	free(line);
