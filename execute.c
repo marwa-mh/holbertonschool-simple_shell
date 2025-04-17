@@ -4,6 +4,7 @@ void execute_command(char *line)
 	pid_t pid;
 	int status;
 	char *argv[2];
+	char *token;
 
 	pid = fork();
 	if (pid == -1)
@@ -11,9 +12,10 @@ void execute_command(char *line)
 		perror("fork");
 		return;
 	}
+	token = strtok(line, "\t\n");
 	if (pid == 0)
 	{
-		argv[0] = line;
+		argv[0] = token;
 		argv[1] = NULL;
 		if (execve(line, argv, environ) == -1)
 		{
