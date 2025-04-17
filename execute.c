@@ -6,18 +6,19 @@ void execute_command(char *line)
 	char *argv[2];
 	char *token;
 
+
+	token = strtok(line, " \t\n");
 	pid = fork();
+	argv[0] = token;
+	argv[1] = NULL;
 	if (pid == -1)
 	{
 		perror("fork");
 		return;
 	}
-	token = strtok(line, "\t\n");
 	if (pid == 0)
 	{
-		argv[0] = token;
-		argv[1] = NULL;
-		if (execve(line, argv, environ) == -1)
+		if (execve(token, argv, environ) == -1)
 		{
 			perror("./shell"); /* execve failed */
 			exit(EXIT_FAILURE);
