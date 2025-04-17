@@ -1,4 +1,9 @@
 #include "shell.h"
+
+/**
+ * execute_command - Branches valid arguments into its own process.
+ * @line: The line the parse.
+ */
 void execute_command(char *line)
 {
 	pid_t pid;

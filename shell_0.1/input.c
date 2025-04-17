@@ -1,8 +1,21 @@
 #include "shell.h"
+
+/**
+ * is_whitespace - Checks if the char is a "whitespace" character.
+ * @ch: The character to check
+ *
+ * Return: 0 for false, 1 for true
+ */
 int is_whitespace(char ch)
 {
 	return (ch == ' ' || ch == '\t' || ch == '\n');
 }
+
+/**
+ * read_input - Reads the standard input and allocates memory.
+ *
+ * Return: The "cleaned" string with redundant characters removed.
+ */
 char *read_input(void)
 {
 	char *line = NULL;
