@@ -17,8 +17,6 @@ void execute_command(char *line)
 	}
 	argv[i] = NULL;
 	pid = fork();
-	//argv[0] = token;
-	//argv[1] = NULL;
 	if (pid == -1)
 	{
 		perror("fork");
