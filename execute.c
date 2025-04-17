@@ -3,14 +3,22 @@ void execute_command(char *line)
 {
 	pid_t pid;
 	int status;
-	char *argv[2];
+	char *argv[64];
 	char *token;
-
+	int i = 0;
 
 	token = strtok(line, " \t\n");
+	if (token == NULL)
+		return;
+	while (token != NULL && i < 63)
+	{
+		argv[i++] = token;
+		token = strtok(NULL, " \t\n");
+	}
+	argv[i] = NULL;
 	pid = fork();
-	argv[0] = token;
-	argv[1] = NULL;
+	//argv[0] = token;
+	//argv[1] = NULL;
 	if (pid == -1)
 	{
 		perror("fork");
@@ -18,7 +26,7 @@ void execute_command(char *line)
 	}
 	if (pid == 0)
 	{
-		if (execve(token, argv, environ) == -1)
+		if (execve(argv[0], argv, environ) == -1)
 		{
 			perror("./shell"); /* execve failed */
 			exit(EXIT_FAILURE);
