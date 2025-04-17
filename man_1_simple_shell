@@ -1,0 +1,44 @@
+.TH HSH 1
+
+.SH NAME
+Simple Shell \- A simple UNIX command line interpreter.
+
+.SH SYNOPSIS
+.B hsh
+
+.SH DESCRIPTION
+.B hsh
+is a minimal UNIX shell written in C. It provides basic command-line functionality including executing programs and built-in commands.
+
+.SH BUILT-INS
+The following functions have been implmented:
+
+.IP \[bu] 2
+exit - Exits the shell.
+
+.IP \[bu] 2
+env - Prints the current envrionment.
+
+.SH EXAMPLES
+.EX
+$ hsh
+hsh> ls -l
+hsh> cat ./file
+hsh> exit
+.EE
+
+.SH BUGS
+Any bugs can be reported to the GitHub repository at:
+
+.TP
+.B https://github.com/marwa-mh/holbertonschool-simple_shell
+
+.SH AUTHORS
+.TP
+.B Marwa Al Mahmoud
+
+.TP
+.B Kaj Kennedy
+
+.TP
+.B Ian Gibson
