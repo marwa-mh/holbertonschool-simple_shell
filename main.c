@@ -1,4 +1,10 @@
 #include "shell.h"
+
+/**
+ * main - The entry point of the shell.
+ *
+ * Return: Always 1
+ */
 int main(void)
 {
 	char *line;
