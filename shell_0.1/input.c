@@ -23,7 +23,7 @@ char *read_input(void)
 	start = line;
 	while (*start && is_whitespace(*start))
 		start++;
-	end = start + strlen(start) -1;
+	end = start + strlen(start) - 1;
 	while (end > start && is_whitespace(*end))
 		*end-- = '\0';
 	cleaned = strdup(start);
