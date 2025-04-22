@@ -1,5 +1,29 @@
 #include "shell.h"
 
+extern char **environ;
+
+/**
+ * _getenv - Get the envrionment variables
+ * @name: The path to read from
+ *
+ * Return: The list of paths
+ */
+char *_getenv(const char *name)
+{
+	int i = 0;
+	size_t len = strlen(name);
+
+	while (environ[i])
+	{
+		if (strncmp(environ[i], name, len) == 0 && environ[i][len] == '=')
+		 	return &environ[i][len + 1];
+
+		i++;
+	}
+	return (NULL);
+}
+
+
 /**
  * find_in_path - Searches for a command in PATH
  * @command: Command to search
@@ -8,7 +32,7 @@
  */
 char *find_in_path(const char *command)
 {
-    char *path = getenv("PATH");
+    char *path = get_env("PATH");
     char *path_copy = strdup(path);
     char *dir = strtok(path_copy, ":");
     char full_path[1024];
