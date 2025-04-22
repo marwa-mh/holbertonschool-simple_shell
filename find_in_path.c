@@ -34,7 +34,7 @@ char *find_in_path(const char *command)
 {
     char *path = _getenv("PATH");
     char *path_copy;
-    char *dir = strtok(path_copy, ":");
+    char *dir;
     char full_path[1024];
 
 	if (path == NULL || *path == '\0')
@@ -42,6 +42,10 @@ char *find_in_path(const char *command)
 
 	path_copy = strdup(path);
 	if (!path_copy)
+		return (NULL);
+
+	dir = strtok(path_copy, ":");
+	if (!dir)
 		return (NULL);
 
   while (dir != NULL)
