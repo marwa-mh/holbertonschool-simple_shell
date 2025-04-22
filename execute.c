@@ -33,6 +33,7 @@ void execute_command(char *line)
 		if (!full_path)
 		{
 			fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
+			free(full_path);
 			return;
 		}
 	}
