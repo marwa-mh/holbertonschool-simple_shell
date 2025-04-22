@@ -33,7 +33,7 @@ void execute_command(char *line)
 		if (!full_path)
 		{
 			fprintf(stderr, "./shell: command not found: %s\n", argv[0]);
-			return;
+			exit(127);
 		}
 	}
 
