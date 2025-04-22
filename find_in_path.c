@@ -32,7 +32,7 @@ char *_getenv(const char *name)
  */
 char *find_in_path(const char *command)
 {
-    char *path = _getenv("PATH");
+    char *path = _getenv("");
     char *path_copy = strdup(path);
     char *dir = strtok(path_copy, ":");
     char full_path[1024];
