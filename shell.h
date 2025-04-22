@@ -11,4 +11,5 @@ extern char **environ;
 void display_prompt(void);
 char *read_input(void);
 void execute_command(char *line);
+char *find_in_path(const char *command);
 #endif
