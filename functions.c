@@ -38,7 +38,7 @@ void execute_command(char **args, char *input) {
  * handle_path - Function entry
  * @input: The command to search for.
  *
- * Description: Searches through the envrionment paths to check
+ * Description: Searches through the environment paths to check
  *							if the command exists in those folders.
  *
  * Return: The path if found or NULL
@@ -60,12 +60,14 @@ char *handle_path(char *input)
 		if (strcmp(token, "PATH") == 0) {
 			token = strtok(NULL, "=");
 			token = strtok(token, ":");
+
 			while (token != NULL) {
 				path = malloc(strlen(token) + strlen(input) + 2);
 				if (path == NULL) {
 					perror("Malloc is NULL");
 					return (NULL);
 				}
+	
 				sprintf(path, "%s/%s", token, input);
 				if (access(path, X_OK) == 0) {
 					free(tmp);
@@ -83,6 +85,16 @@ char *handle_path(char *input)
 	return (NULL);
 }
 
+/**
+ * print_env - Function entry
+ * Description: Prints the current environment variables.
+ */
+void print_env(void) {
+	char **env;
+
+	for (env = environ; *env != NULL; env++)
+		printf("%s\n", *env);
+}
 
 /**
  * parse - Function entry
@@ -111,11 +123,13 @@ void parse(char *input)
 		exit(0);
 
 	if (strcmp(input, "exit") == 0 && args[1] == NULL) {
-		// handle exit case
+		free(args[0]);
+		exit(EXIT_SUCCESS);
 	}
 
 	if (strcmp(input, "env") == 0) {
-		// handle env case
+		print_env();
+		return;
 	}
 
 	token = strdup(args[0]);
@@ -128,7 +142,7 @@ void parse(char *input)
 	}
 
 	fprintf(stderr, "./hsh: 1: %s: not found\n", token);
-	perror("");
 	free(token);
 	exit(127);
 }
+
