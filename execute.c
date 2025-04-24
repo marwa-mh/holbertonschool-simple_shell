@@ -3,7 +3,7 @@
  * execute_command - Branches valid arguments into its own process
  * @line: The line to parse
  */
-void execute_command(char *line)
+int execute_command(char *line)
 {
 	pid_t pid;
 	int status;
@@ -13,7 +13,7 @@ void execute_command(char *line)
 
 	token = strtok(line, " \t\n");
 	if (token == NULL)
-		return;
+		return 0;
 
 	while (token != NULL && i < 63)
 	{
@@ -22,7 +22,9 @@ void execute_command(char *line)
 	}
 	argv[i] = NULL;
 
-	/* Check if command has a '/' or needs PATH resolution */
+	if (strcmp(argv[0], "exit") == 0)
+		exit(0);
+
 	if (strchr(argv[0], '/'))
 	{
 		full_path = argv[0];
@@ -32,8 +34,8 @@ void execute_command(char *line)
 		full_path = find_in_path(argv[0]);
 		if (!full_path)
 		{
-			fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
-			exit(127);
+			fprintf(stderr, "./shell: command not found: %s\n", argv[0]);
+			return 127;  // Return proper error code
 		}
 	}
 
@@ -41,15 +43,16 @@ void execute_command(char *line)
 	if (pid == -1)
 	{
 		perror("fork");
-		free(full_path);
-		return;
+		if (full_path != argv[0])
+			free(full_path);
+		return 1;
 	}
 
 	if (pid == 0)
 	{
 		if (execve(full_path, argv, environ) == -1)
 		{
-			perror("./hsh");
+			perror("./shell");
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -59,4 +62,6 @@ void execute_command(char *line)
 		if (full_path != argv[0])
 			free(full_path);
 	}
+
+	return 0;
 }
