@@ -32,7 +32,7 @@ void execute_command(char *line)
 		full_path = find_in_path(argv[0]);
 		if (!full_path)
 		{
-			fprintf(stderr, "./hsh: 1: %s not found\n", argv[0]);
+			fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
 			exit(127);
 		}
 	}
