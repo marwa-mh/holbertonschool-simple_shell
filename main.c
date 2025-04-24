@@ -9,6 +9,8 @@ int main(void)
 {
 	char *line;
 
+	setenv("PATH", "", 1);
+
 	while (1)
 	{
 		display_prompt();

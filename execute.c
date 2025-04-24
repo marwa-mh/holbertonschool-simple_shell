@@ -32,9 +32,8 @@ void execute_command(char *line)
 		full_path = find_in_path(argv[0]);
 		if (!full_path)
 		{
-			fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
-			free(full_path);
-			return;
+			fprintf(stderr, "./hsh: command not found: %s\n", argv[0]);
+			exit(127);
 		}
 	}
 
@@ -50,7 +49,7 @@ void execute_command(char *line)
 	{
 		if (execve(full_path, argv, environ) == -1)
 		{
-			perror("./shell");
+			perror("./hsh");
 			exit(EXIT_FAILURE);
 		}
 	}
