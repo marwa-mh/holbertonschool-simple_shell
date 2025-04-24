@@ -3,32 +3,32 @@
 /**
  * main - The entry point of the shell.
  *
- * Return: Always 1
+ * Return: Exit status
  */
 int main(void)
 {
 	char *line;
+	int status = 0;
+	int interactive = isatty(STDIN_FILENO);
 
 	while (1)
 	{
-		display_prompt();
+		if (interactive)
+			display_prompt();
 
 		line = read_input();
 		if (line == NULL) /* Ctrl+D or error */
 		{
-			if (isatty(STDIN_FILENO))
+			if (interactive)
 				write(STDOUT_FILENO, "\n", 1);
 			break;
 		}
 
 		if (line[0] != '\0') /* Skip empty lines */
-		{
-			int status = execute_command(line);
-			if (status != 0)
-				exit(status);
-		}
+			status = execute_command(line);
 
 		free(line);
 	}
-	return (0);
+
+	return (status);
 }
