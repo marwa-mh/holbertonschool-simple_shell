@@ -7,11 +7,7 @@
  */
 int main(void)
 {
-<<<<<<< HEAD
-	char *input = NULL;
-=======
 	char *line;
->>>>>>> parent of fc1880e (Hopefully this works?)
 
 	while (1)
 	{
