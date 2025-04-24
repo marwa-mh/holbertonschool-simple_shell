@@ -8,17 +8,15 @@ extern char **environ;
  *
  * Return: The list of paths
  */
-char *_getenv(const char *name)
+char *_getenv(char *name)
 {
-	int i = 0;
+	int i;
 	size_t len = strlen(name);
 
-	while (environ[i])
+	for (i = 0; environ[i]; i++)
 	{
 		if (strncmp(environ[i], name, len) == 0 && environ[i][len] == '=')
-		 	return &environ[i][len + 1];
-
-		i++;
+			return (environ[i] + len + 1);
 	}
 	return (NULL);
 }
@@ -32,10 +30,10 @@ char *_getenv(const char *name)
  */
 char *find_in_path(const char *command)
 {
-    char *path = _getenv("PATH");
-    char *path_copy;
-    char *dir;
-    char full_path[1024];
+  char *path = _getenv("PATH");
+  char *path_copy;
+  char *dir;
+	char full_path[1024];
 
 	if (path == NULL || *path == '\0')
 		return (NULL);
