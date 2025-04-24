@@ -30,9 +30,8 @@ char *_getenv(char *name)
  */
 char *find_in_path(const char *command)
 {
-  char *path = _getenv("PATH");
-  char *path_copy;
-  char *dir;
+	char *path = _getenv("PATH");
+	char *path_copy, *dir;
 	char full_path[1024];
 
 	if (path == NULL || *path == '\0')
@@ -40,36 +39,21 @@ char *find_in_path(const char *command)
 
 	path_copy = strdup(path);
 	if (!path_copy)
-	{
-		free(path);
-		free(path_copy);
 		return (NULL);
-	}
 
 	dir = strtok(path_copy, ":");
-	if (!dir)
+	while (dir != NULL)
 	{
-		free(path);
-		free(path_copy);
-		return (NULL);
+		snprintf(full_path, sizeof(full_path), "%s/%s", dir, command);
+		if (access(full_path, X_OK) == 0)
+		{
+			free(path_copy);
+			return strdup(full_path);
+		}
+		dir = strtok(NULL, ":");
 	}
 
-  while (dir != NULL)
-  {
-		full_path[0] = '\0';
-
-    strcpy(full_path, dir);
-    strcat(full_path, "/");
-    strcat(full_path, command);
-
-    if (access(full_path, X_OK) == 0)
-    {
-      free(path_copy);
-			return strdup(full_path);
-    }
-    dir = strtok(NULL, ":");
-  }
-
-  free(path_copy);
-  return (NULL);
+	free(path_copy);
+	return (NULL);
 }
+
