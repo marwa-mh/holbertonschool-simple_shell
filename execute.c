@@ -35,7 +35,7 @@ int execute_command(char *line)
 		if (!full_path)
 		{
 			fprintf(stderr, "./shell: command not found: %s\n", argv[0]);
-			return 127;  // Return proper error code
+			return 127;
 		}
 	}
 
