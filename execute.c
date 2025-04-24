@@ -1,7 +1,9 @@
 #include "shell.h"
+
 /**
- * execute_command - Branches valid arguments into its own process
- * @line: The line to parse
+ * execute_command - Parses and executes a command line
+ * @line: The input line to parse and execute
+ * Return: Status code
  */
 int execute_command(char *line)
 {
@@ -13,7 +15,7 @@ int execute_command(char *line)
 
 	token = strtok(line, " \t\n");
 	if (token == NULL)
-		return 0;
+		return (0);
 
 	while (token != NULL && i < 63)
 	{
@@ -35,8 +37,17 @@ int execute_command(char *line)
 		if (!full_path)
 		{
 			fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
-			return 127;
+			return (127);
 		}
+	}
+
+	/* ✅ This extra check is important for commands not found or not executable */
+	if (access(full_path, X_OK) != 0)
+	{
+		fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
+		if (full_path != argv[0])
+			free(full_path);
+		return (127);
 	}
 
 	pid = fork();
@@ -45,15 +56,15 @@ int execute_command(char *line)
 		perror("fork");
 		if (full_path != argv[0])
 			free(full_path);
-		return 1;
+		return (1);
 	}
 
 	if (pid == 0)
 	{
 		if (execve(full_path, argv, environ) == -1)
 		{
-			perror("./shell");
-			exit(EXIT_FAILURE);
+			fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
+			exit(127);
 		}
 	}
 	else
@@ -63,5 +74,5 @@ int execute_command(char *line)
 			free(full_path);
 	}
 
-	return 0;
+	return (0);
 }
