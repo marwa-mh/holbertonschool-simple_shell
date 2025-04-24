@@ -9,9 +9,6 @@ int main(void)
 {
 	char *input = NULL;
 
-	// Uncomment to set the PATH variable to blank.
-	// setenv("PATH", "", 1);
-
 	while (1)
 	{
 		display_prompt();
