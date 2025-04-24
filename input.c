@@ -44,12 +44,3 @@ char *read_input(void)
 
 	return (cleaned);
 }
-
-/**
- * display_prompt - Checks if the stdin is a terminal and displays a message.
- */
-void display_prompt(void)
-{
-	if (isatty(STDIN_FILENO))
-		printf("#cisfun$ ");
-}

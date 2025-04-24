@@ -7,22 +7,28 @@
  */
 int main(void)
 {
+<<<<<<< HEAD
 	char *input = NULL;
+=======
+	char *line;
+>>>>>>> parent of fc1880e (Hopefully this works?)
 
 	while (1)
 	{
 		display_prompt();
 
-		input = read_input();
-		if (input == NULL) {
+		line = read_input();
+		if (line == NULL) /* Ctrl+D or error */
+		{
 			if (isatty(STDIN_FILENO))
 				write(STDOUT_FILENO, "\n", 1);
 			break;
 		}
 
-		if (input[0] != '\0')
-			parse(input);
+		if (line[0] != '\0') /* Skip empty lines */
+			execute_command(line);
+
+		free(line);
 	}
-	free(input);
 	return (0);
 }
