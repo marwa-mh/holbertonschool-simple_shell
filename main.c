@@ -22,7 +22,11 @@ int main(void)
 		}
 
 		if (line[0] != '\0') /* Skip empty lines */
-			execute_command(line);
+		{
+			int status = execute_command(line);
+			if (status != 0)
+				exit(status);
+		}
 
 		free(line);
 	}
