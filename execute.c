@@ -38,7 +38,7 @@ int execute_command(char *line)
 		}
 	}
 
-	/* ✅ This extra check is important for commands not found or not executable */
+	
 	if (access(full_path, X_OK) != 0)
 	{
 		fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
