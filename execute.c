@@ -27,6 +27,19 @@ int execute_command(char *line)
 	if (strcmp(argv[0], "exit") == 0)
 		exit(0);
 
+	if (strcmp(argv[0], "env") == 0)
+	{
+		int j = 0;
+
+		while (environ[j])
+		{
+			write(STDOUT_FILENO, environ[j], strlen(environ[j]));
+			write(STDOUT_FILENO, "\n", 1);
+			j++;
+		}
+		return (0);
+	}
+
 	if (strchr(argv[0], '/'))
 	{
 		full_path = argv[0];
