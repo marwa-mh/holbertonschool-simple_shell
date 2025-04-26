@@ -25,7 +25,16 @@ int main(void)
 		}
 
 		if (line[0] != '\0') /* Skip empty lines */
+		{
+			if (strncmp(line, "exit", 4) == 0 &&
+				(line[4] == '\n' || line[4] == '\0' || line[4] == ' '))
+			{
+				free(line);
+				break;
+			}
+
 			status = execute_command(line);
+		}
 
 		free(line);
 	}
