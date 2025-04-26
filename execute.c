@@ -24,9 +24,6 @@ int execute_command(char *line)
 	}
 	argv[i] = NULL;
 
-	if (strcmp(argv[0], "exit") == 0)
-		exit(0);
-
 	if (strchr(argv[0], '/'))
 	{
 		full_path = argv[0];
