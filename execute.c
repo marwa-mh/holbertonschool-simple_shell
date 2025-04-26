@@ -24,6 +24,9 @@ int execute_command(char *line)
 	}
 	argv[i] = NULL;
 
+	if (strcmp(argv[0], "exit") == 0)
+		exit(0);
+
 	if (strchr(argv[0], '/'))
 	{
 		full_path = argv[0];
@@ -38,7 +41,6 @@ int execute_command(char *line)
 		}
 	}
 
-	
 	if (access(full_path, X_OK) != 0)
 	{
 		fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
@@ -69,6 +71,11 @@ int execute_command(char *line)
 		wait(&status);
 		if (full_path != argv[0])
 			free(full_path);
+
+		if (WIFEXITED(status))
+			return WEXITSTATUS(status);
+		else
+			return 1;
 	}
 
 	return (0);
