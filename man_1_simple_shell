@@ -1,44 +1,82 @@
-.TH HSH 1
+.TH hsh 1
 
-.SH NAME
-Simple Shell \- A simple UNIX command line interpreter.
+NAME  
+    hsh - A simple UNIX command-line interpreter written in C.
 
-.SH SYNOPSIS
-.B hsh
+SYNOPSIS  
+    hsh
 
-.SH DESCRIPTION
-.B hsh
-is a minimal UNIX shell written in C. It provides basic command-line functionality including executing programs and built-in commands.
+DESCRIPTION  
+    hsh is a basic UNIX shell written in C as part of the Holberton School curriculum.  
+    It allows users to execute commands, run programs, and interact with the operating system via the command line.  
 
-.SH BUILT-INS
-The following functions have been implmented:
+    It supports basic features like:
+    - Running system commands (e.g., ls, cat, pwd)
+    - Built-in commands: exit, env
+    - PATH lookup for commands
+    - Handling arguments and whitespace
+    - Forking processes and executing commands with execve
 
-.IP \[bu] 2
-exit - Exits the shell.
+HOW IT WORKS  
+    1. The shell displays a prompt (`#cisfun$`) in interactive mode.
+    2. It reads a line from standard input using getline.
+    3. The input line is cleaned of leading/trailing whitespace.
+    4. The shell splits the line into arguments (tokens).
+    5. It checks for built-in commands like `exit` and `env`.
+    6. If not a built-in, it searches the command in the PATH directories.
+    7. If the executable is found, it forks a new process and runs the command.
+    8. It waits for the command to finish, then returns to the prompt.
 
-.IP \[bu] 2
-env - Prints the current envrionment.
+BUILT-IN COMMANDS  
+    exit  
+        Exits the shell.
 
-.SH EXAMPLES
-.EX
-$ hsh
-hsh> ls -l
-hsh> cat ./file
-hsh> exit
-.EE
+    env  
+        Displays the current environment variables.
 
-.SH BUGS
-Any bugs can be reported to the GitHub repository at:
+EXAMPLES  
+    $ hsh  
+    #cisfun$ ls  
+    file1.txt file2.c main.c  
+    #cisfun$ env  
+    PATH=/usr/local/bin:/usr/bin:/bin  
+    HOME=/home/user  
+    #cisfun$ ./hello  
+    Hello, world!  
+    #cisfun$ exit
 
-.TP
-.B https://github.com/marwa-mh/holbertonschool-simple_shell
+FILES  
+    shell.h  
+        Header file with function prototypes and constants.
 
-.SH AUTHORS
-.TP
-.B Marwa Al Mahmoud
+    main.c  
+        Entry point of the program. Runs the main shell loop.
 
-.TP
-.B Kaj Kennedy
+    read_input.c  
+        Reads and sanitizes user input.
 
-.TP
-.B Ian Gibson
+    execute_command.c  
+        Parses the command line and runs the corresponding command.
+
+    path.c  
+        Contains the function to search for executables in the PATH.
+
+RETURN VALUE  
+    Returns the exit status of the last executed command.  
+    - If a command is not found: returns 127.  
+    - If a command exits successfully: returns its exit status.  
+    - On execution error or fork failure: returns 1.
+
+ERRORS  
+    If an unknown command is entered, the shell prints an error message:  
+        ./hsh: 1: command: not found
+
+    If memory allocation or fork fails, an error is displayed using perror.
+
+SEE ALSO  
+    sh(1), bash(1), execve(2), fork(2), getenv(3), strtok(3)
+
+AUTHORS  
+    Marwa Al Mahmoud <10520@holbertonstudents.com>  
+    Kaj Kennedy <10512@holbertonstudents.com>  
+    Ian Gibson <10459@holbertonstudents.com>
